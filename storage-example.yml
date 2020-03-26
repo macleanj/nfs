@@ -1,0 +1,119 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv0
+  labels:
+    name: mysql-pv0
+    environment: demo
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: nfs-client-mysql
+  nfs:
+    path: /mnt/volumes/wp-mysql-0
+    server: nfs-server.lab.crosslogic-consulting.com
+  mountOptions:
+    - port=2099
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: db-mysql-0
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-client-mysql
+  resources:
+    requests:
+      storage: 1Gi
+  selector:
+    matchLabels:
+      name: mysql-pv0
+      environment: demo
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv1
+  labels:
+    name: mysql-pv1
+    environment: demo
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: nfs-client-mysql
+  nfs:
+    path: /mnt/volumes/wp-mysql-1
+    server: nfs-server.lab.crosslogic-consulting.com
+  mountOptions:
+    - port=2099
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: db-mysql-1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-client-mysql
+  resources:
+    requests:
+      storage: 1Gi
+  selector:
+    matchLabels:
+      name: mysql-pv1
+      environment: demo
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv2
+  labels:
+    name: mysql-pv2
+    environment: demo
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: nfs-client-mysql
+  nfs:
+    path: /mnt/volumes/wp-mysql-2
+    server: nfs-server.lab.crosslogic-consulting.com
+  mountOptions:
+    - port=2099
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: db-mysql-2
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-client-mysql
+  resources:
+    requests:
+      storage: 1Gi
+  selector:
+    matchLabels:
+      name: mysql-pv2
+      environment: demo
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: wp-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-client-wordpress
+  resources:
+    requests:
+      storage: 300Mi
